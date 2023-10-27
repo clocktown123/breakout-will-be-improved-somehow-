@@ -1,0 +1,218 @@
+import pygame
+import random
+pygame.init()
+
+#open a new window
+screen = pygame.display.set_mode((700,500))
+pygame.display.set_caption("breakout")
+
+# here's the variable that runs our game loop
+doExit = False
+
+# The clock will be used to control how fast the screen updates
+clock = pygame.time.Clock()
+
+class brick:
+    def __init__(self, xpos, ypos):
+        self.xpos = xpos
+        self.ypos = ypos
+        self.color = (random.randrange(100, 250),random.randrange(100, 250),random.randrange(100, 250))
+        self.isDead = False
+    def draw(self):
+        pygame.draw.rect(screen, self.color, (self.xpos, self.ypos, 100, 50))
+    def collide(self, x, y):
+        if x> self.xpos and x<self.xpos+100 and y > self.ypos and y < self.ypos+50 and self.isDead == False :
+            print("hit")
+            return True
+        
+   
+
+#variables to hold paddle position
+#these go above game loop
+p1x = 300
+p1y = 470
+
+#ball variables
+bx = 250 #xposition
+by = 250 #yposition
+bVx = 5 #x velocity (horizontal speed)
+bVy = 5 #y velocity (vertical speed)
+
+#brick locations above game loop
+b1 = brick(30, 50)
+b2 = brick(140, 50)
+b3 = brick(250, 50)
+b4 = brick(360, 50)
+b5 = brick(470, 50)
+b6 = brick(580, 50)
+b7 = brick(30, 110)
+b8 = brick(140, 110)
+b9 = brick(250, 110)
+b10 = brick(360, 110)
+b11 = brick(470, 110)
+b12 = brick(580, 110)
+collide = False
+
+
+
+
+while not doExit: #Game Loop
+    
+    #event que stuff
+    clock.tick(60) #set the fps
+
+    for event in pygame.event.get(): #check if user did something
+        if event.type == pygame.QUIT: #check if user clicked close
+            doExit = True #flag that e are done so we exit game loop
+            
+            #game logic will go here
+        keys = pygame.key.get_pressed()
+    if keys[pygame.K_LEFT]:
+        p1x-=5
+    if keys[pygame.K_RIGHT]:
+        p1x+=5
+            
+    #ball-paddle reflection
+            
+    if bx+10 > p1x and bx-10<p1x+100 and by+10 > p1y:
+        bVy *= -1
+            
+    #ball movement
+    bx += bVx
+    by += bVy
+        
+    #reflect the ball off side walls of screen
+    #b1.collide()
+    
+    if bx < 0 or bx + 20 > 700:
+        bVx *= -1
+    if by > 500 - 20 or by < 0:
+        bVy *= -1
+    
+    #collide
+    
+    if b1.collide(bx, by) == True:
+        bVy *= -1
+        b1.isDead = True
+    
+    if b1.isDead == True:
+        b1.collide(bx, by) == False
+        
+    if b2.collide(bx, by) == True:
+        bVy *= -1
+        b2.isDead = True
+        
+    if b2.isDead == True:
+        b2.collide(bx, by) == False
+        
+    if b3.collide(bx, by) == True:
+        bVy *= -1
+        b3.isDead = True
+        
+    if b3.isDead == True:
+        b3.collide(bx, by) == False
+        
+    if b4.collide(bx, by) == True:
+        bVy *= -1
+        b4.isDead = True
+        
+    if b4.isDead == True:
+        b4.collide(bx, by) == False
+        
+    if b5.collide(bx, by) == True:
+        bVy *= -1
+        b5.isDead = True
+        
+    if b5.isDead == True:
+        b5.collide(bx, by) == False
+        
+    if b6.collide(bx, by) == True:
+        bVy *= -1
+        b6.isDead = True
+        
+    if b6.isDead == True:
+        b6.collide(bx, by) == False
+        
+    if b7.collide(bx, by) == True:
+        bVy *= -1
+        b7.isDead = True
+        
+    if b7.isDead == True:
+        b7.collide(bx, by) == False
+        
+    if b8.collide(bx, by) == True:
+        bVy *= -1
+        b8.isDead = True
+        
+    if b8.isDead == True:
+        b8.collide(bx, by) == False
+        
+    if b9.collide(bx, by) == True:
+        bVy *= -1
+        b9.isDead = True
+        
+    if b9.isDead == True:
+        b9.collide(bx, by) == False
+        
+    if b10.collide(bx, by) == True:
+        bVy *= -1
+        b10.isDead = True
+        
+    if b10.isDead == True:
+        b10.collide(bx, by) == False
+        
+    if b11.collide(bx, by) == True:
+        bVy *= -1
+        b11.isDead = True
+        
+    if b11.isDead == True:
+        b11.collide(bx, by) == False
+        
+    if b12.collide(bx, by) == True:
+        bVy *= -1
+        b12.isDead = True
+        
+    if b12.isDead == True:
+        b12.collide(bx, by) == False
+    
+    
+        
+    
+            
+            
+            
+# render section will go here
+    screen.fill((0,0,0)) #wipe screen black
+    
+    pygame.draw.rect(screen, (255, 255, 255), (p1x, p1y, 100, 20), 10)
+    
+    pygame.draw.circle(screen, (255, 255, 255), (bx, by,), 10)
+    
+    if b1.isDead == False:
+        b1.draw()
+    if b2.isDead == False:
+        b2.draw()
+    if b3.isDead == False:
+        b3.draw()
+    if b4.isDead == False:
+        b4.draw()
+    if b5.isDead == False:
+        b5.draw()
+    if b6.isDead == False:
+        b6.draw()
+    if b7.isDead == False:
+        b7.draw()
+    if b8.isDead == False:
+        b8.draw()
+    if b9.isDead == False:
+        b9.draw()
+    if b10.isDead == False:
+        b10.draw()
+    if b11.isDead == False:
+        b11.draw()
+    if b12.isDead == False:
+        b12.draw()
+    
+           #update the screen
+    pygame.display.flip()
+    
